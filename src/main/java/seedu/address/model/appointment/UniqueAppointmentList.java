@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.analytics.Analytics;
 import seedu.address.model.appointment.exceptions.AppointmentClashException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.AppointmentSlotFullyBookedException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
 /**
@@ -77,6 +78,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         }
         if (clashes(toAdd)) {
             throw new AppointmentClashException();
+        }
+        if (isFullyBooked(toAdd)) {
+            throw new AppointmentSlotFullyBookedException();
         }
         internalList.add(toAdd);
         updateAppointmentAnalytics();

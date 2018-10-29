@@ -29,7 +29,7 @@ public class AddApptCommand extends Command {
             + "Parameters: "
             + PREFIX_DATE + "dd mm yyyy "
             + PREFIX_TIME + "hh mm "
-            + PREFIX_TYPE + "TYPE"
+            + PREFIX_TYPE + "[followup] or [new]"
             + PREFIX_NAME + "PATIENT NAME "
             + PREFIX_PHONE + "PATIENT PHONE "
             + PREFIX_EMAIL + "PATIENT EMAIL "

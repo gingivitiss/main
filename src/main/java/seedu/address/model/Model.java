@@ -126,6 +126,7 @@ public interface Model {
      * Returns true if an appointment clashes with another appointment.
      */
     boolean hasAppointmentClash(Appointment appt);
+
     /**
      * Deletes the given appointment.
      * Not to be directly accessed by the user.

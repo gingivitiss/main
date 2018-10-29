@@ -201,7 +201,7 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code type} is invalid.
      */
-    public static int parseType(String type) throws ParseException {
+    public static int parseType(String type) {
         requireNonNull(type);
         String trimmedType = type.trim();
         if (!trimmedType.matches("followup")) {
