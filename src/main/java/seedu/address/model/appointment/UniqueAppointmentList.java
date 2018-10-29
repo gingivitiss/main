@@ -29,15 +29,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
     private final Analytics analytics;
+    private final int numDoctors;
 
     /**
      * Initializes a {@code UniqueAppointmentList} object.
      * Updates an {@code Analytics} instance.
      * @@author arsalanc-v2
      */
-    public UniqueAppointmentList(Analytics analytics) {
+    public UniqueAppointmentList(Analytics analytics, int numDoctors) {
         this.analytics = analytics;
         updateAppointmentAnalytics();
+        this.numDoctors = numDoctors;
     }
 
     /**
@@ -57,8 +59,16 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Adds an appointment to the list.
-     * The appointment must not already exist in the list.
+     * Returns true if the list contains the same amount or more of 'same slot' appointments as there are doctors.
+     */
+    public boolean isFullyBooked(Appointment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().filter(toCheck::isOverlapAppointment).count() >= numDoctors;
+    }
+
+    /**
+     * Adds an appointment to the list. The appointment must not already exist in the list.
+     * The appointment should not clash with another appointment.
      */
     public void add(Appointment toAdd) {
         requireNonNull(toAdd);

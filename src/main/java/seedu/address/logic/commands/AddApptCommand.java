@@ -1,8 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_IC;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
@@ -25,16 +29,26 @@ public class AddApptCommand extends Command {
             + "Parameters: "
             + PREFIX_DATE + "dd mm yyyy "
             + PREFIX_TIME + "hh mm "
-            + PREFIX_IC + "[Patient ID]"
+            + PREFIX_TYPE + "TYPE"
+            + PREFIX_NAME + "PATIENT NAME "
+            + PREFIX_PHONE + "PATIENT PHONE "
+            + PREFIX_EMAIL + "PATIENT EMAIL "
+            + PREFIX_ADDRESS + "PATIENT ADDRESS "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "03 03 2003 "
             + PREFIX_TIME + "16 30"
-            + PREFIX_IC + "S000000A"
-            + PREFIX_TYPE + "followup ";
+            + PREFIX_TYPE + "followup "
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_TAG + "fever ";
 
     public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment is already scheduled.";
     public static final String MESSAGE_CLASH_APPOINTMENT = "This appointment clashes with a pre-existing appointment.";
+    public static final String MESSAGE_FULLYBOOKED_APPOINTMENT = "This appointment slot is already fully booked";
 
     private final Appointment toAdd;
 

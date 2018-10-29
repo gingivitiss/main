@@ -44,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         //@@author jjlee050
         doctors = new UniqueDoctorList();
         //@@author gingivitiss
-        appointments = new UniqueAppointmentList(analytics);
+        appointments = new UniqueAppointmentList(analytics, doctors.getSize());
     }
 
     public AddressBook() {}

@@ -95,7 +95,7 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "IC"));
         }
         //TODO: Add ic once appointment takes in ic
-        return new Appointment(Date.newDate(date), Time.newTime(time), null, type, null);
+        return new Appointment(Date.newDate(date), Time.newTime(time), null, type);
     }
 
     @Override

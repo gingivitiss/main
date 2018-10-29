@@ -105,6 +105,14 @@ public class UniqueDoctorList implements Iterable<Doctor> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    /**
+     * Returns the number of doctors in the list.
+     * @@author gingivitiss
+     */
+    public int getSize() {
+        return internalList.size();
+    }
+
     @Override
     public Iterator<Doctor> iterator() {
         return internalList.iterator();

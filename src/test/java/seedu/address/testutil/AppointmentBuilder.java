@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import static seedu.address.testutil.TypicalPersons.ADAM;
 import static seedu.address.testutil.TypicalPersons.ALICE_AS_PATIENT;
 
+import java.util.Optional;
+
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.Date;
 import seedu.address.model.appointment.Time;
@@ -20,14 +22,14 @@ public class AppointmentBuilder {
     public static final Patient DEFAULT_PATIENT = ALICE_AS_PATIENT;
     public static final int DEFAULT_TYPE = 0;
     public static final int DEFAULT_STATUS = 1;
-    public static final Doctor DEFAULT_DOCTOR = ADAM;
+    public static final Optional<Doctor> DEFAULT_DOCTOR = Optional.of(ADAM);
 
     private Date date;
     private Time time;
     private Patient patient;
     private int type;
     private int status;
-    private Doctor doctor;
+    private Optional<Doctor> doctor;
 
     public AppointmentBuilder() {
         date = DEFAULT_DATE;
@@ -78,11 +80,11 @@ public class AppointmentBuilder {
      * Sets the {@code Doctor} of the {@code Appointment} that we are building.
      */
     public AppointmentBuilder withDoctor(Doctor doctor) {
-        this.doctor = doctor;
+        this.doctor = Optional.of(doctor);
         return this;
     }
 
     public Appointment build() {
-        return new Appointment(date, time, patient, type, doctor);
+        return new Appointment(date, time, patient, type);
     }
 }

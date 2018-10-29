@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.model.doctor.Doctor;
 import seedu.address.model.patient.Patient;
@@ -23,19 +24,23 @@ public class Appointment {
     //fields used for making appointment
     private final Date appointmentDate;
     private final Time appointmentTime;
+    private final Patient patient;
     private int appointmentStatus;
     private int appointmentType;
-    private final Patient patient;
-    private final Doctor assignedDoctor;
+    private Optional<Doctor> assignedDoctor;
 
-    public Appointment(Date date, Time time, Patient patient, int appointmentType, Doctor doctor) {
-        requireAllNonNull(date, time, patient); //TODO: Include appointmentType and doctor
+    public Appointment(Date date, Time time, Patient patient, int appointmentType) {
+        requireAllNonNull(date, time, patient);
         this.appointmentDate = date;
         this.appointmentTime = time;
         this.patient = patient;
         this.appointmentStatus = APPROVED;
         this.appointmentType = appointmentType;
-        this.assignedDoctor = doctor;
+        this.assignedDoctor = patient.getPreferredDoctor();
+    }
+
+    public void setAssignedDoctor(Doctor doctor) {
+        assignedDoctor = Optional.of(doctor);
     }
 
     public Date getAppointmentDate() {
@@ -59,7 +64,7 @@ public class Appointment {
         return appointmentType;
     }
 
-    public Doctor getAssignedDoctor() {
+    public Optional<Doctor> getAssignedDoctor() {
         return assignedDoctor;
     }
 
@@ -94,14 +99,18 @@ public class Appointment {
     public boolean isSameDoctor(Appointment other) {
         return other.getAssignedDoctor().equals(getAssignedDoctor());
     }
+
     /**
-     * Returns true if the appointments are the same.
-     * Status is not considered.
-     * @param  other Appointment to compare with.
+     * Returns true if the appointments are the same. Status is not considered.
+     * If both {@code assignedDoctors} are null, they might not be the same.
+     * @param other Appointment to compare with.
      */
     public boolean isSameAppointment(Appointment other) {
         if (other == this) {
             return true;
+        }
+        if (other.getAssignedDoctor() == null) {
+            return isSamePatient(other) && isSameSlot(other);
         }
         return isSamePatient(other) && isSameSlot(other) && isSameDoctor(other);
     }
@@ -109,11 +118,16 @@ public class Appointment {
     /**
      * Returns true if the {@code toCheck} appointment's time slot encroaches {@code this} appointment's duration.
      * Maximum appointment duration is 1 hour.
+     * If both {@code assignedDoctors} are null, they might not overlap.
      * @param toCheck Appointment to compare with.
      */
     public boolean isOverlapAppointment(Appointment toCheck) {
         if (toCheck == this) {
             return true;
+        }
+        if (toCheck.getAssignedDoctor() == null) {
+            return (toCheck.getAppointmentTime().subtractMinutes(this.getAppointmentTime()) < 60)
+                    && (toCheck.getAppointmentTime().subtractMinutes(this.getAppointmentTime()) > -60);
         }
         return (toCheck.getAppointmentTime().subtractMinutes(this.getAppointmentTime()) < 60)
                 && (toCheck.getAppointmentTime().subtractMinutes(this.getAppointmentTime()) > -60)
