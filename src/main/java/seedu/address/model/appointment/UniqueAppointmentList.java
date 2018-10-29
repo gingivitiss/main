@@ -11,7 +11,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.analytics.Analytics;
 import seedu.address.model.appointment.exceptions.AppointmentClashException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
-import seedu.address.model.appointment.exceptions.AppointmentSlotFullyBookedException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 
 /**
@@ -61,11 +60,11 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     /**
      * Returns true if the list contains the same amount or more of 'same slot' appointments as there are doctors.
-     */
-    public boolean isFullyBooked(Appointment toCheck) {
+     *
+    public boolean isFullyBooked(Appointment toCheck) { TODO
         requireNonNull(toCheck);
         return internalList.stream().filter(toCheck::isOverlapAppointment).count() >= numDoctors;
-    }
+    }*/
 
     /**
      * Adds an appointment to the list. The appointment must not already exist in the list.
@@ -79,9 +78,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         if (clashes(toAdd)) {
             throw new AppointmentClashException();
         }
-        if (isFullyBooked(toAdd)) {
+        /*if (isFullyBooked(toAdd)) { TODO
             throw new AppointmentSlotFullyBookedException();
-        }
+        }*/
         internalList.add(toAdd);
         updateAppointmentAnalytics();
     }
